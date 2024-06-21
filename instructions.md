@@ -51,35 +51,31 @@ models:
         tests:
           - not_null
 
-
-
+```
 
 **5. Run dbt Commands:**
 
-Execute dbt seed to seed the data.
-Execute dbt run to build the models.
-Execute dbt test to ensure the models are working correctly.
+- Execute dbt seed to seed the data.
+- Execute dbt run to build the models.
+- Execute dbt test to ensure the models are working correctly.
 
 
-Example
+### Example
 To add a new ad platform "example_ads", follow the steps:
 
-Load Data:
+- Load Data:
+	Ensure the src_ads_example_all_data table is available in BigQuery.
+- Create Model:
+	Create example_ads.sql in the models/example directory with the necessary SQL transformations.
+- Update Schema:
+	Add schema tests for the new model.
 
-Ensure the src_ads_example_all_data table is available in BigQuery.
-Create Model:
-
-Create example_ads.sql in the models/example directory with the necessary SQL transformations.
-Update Schema:
-
-Add schema tests for the new model.
-
-Run Commands: (in dbt Cloud)
-
-dbt seed
-dbt run
-dbt test
-
+	Run Commands: (in dbt Cloud)
+```
+	dbt seed
+	dbt run
+	dbt test
+```
 
 ## Conclusion
 By following these steps, you can successfully integrate new ad platforms into the MCDM.
