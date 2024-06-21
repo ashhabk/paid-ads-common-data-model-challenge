@@ -51,6 +51,9 @@ models:
         tests:
           - not_null
 
+
+
+
 **5. Run dbt Commands:**
 
 Execute dbt seed to seed the data.
