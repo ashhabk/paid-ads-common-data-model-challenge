@@ -77,5 +77,10 @@ To add a new ad platform "example_ads", follow the steps:
 	dbt test
 ```
 
+**6. Create Dashboard in Looker**
+After you run model, check the data in bigquery to make sure your data already uploaded,
+After your data already become table in bigquery, then you can create dashboard in Looker using connection in bigquery
+
+here is sample of the dashboard : https://lookerstudio.google.com/reporting/b2284ca7-c9cd-4adc-9f83-c3058e19ca86
 ## Conclusion
 By following these steps, you can successfully integrate new ad platforms into the MCDM.
