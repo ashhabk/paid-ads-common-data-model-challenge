@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: bing_ads
+    description: "Model for Bing Ads"
+  - name: facebook_ads
+    description: "Model for Facebook Ads"
+  - name: twitter_ads
+    description: "Model for Twitter Ads"
+  - name: tiktok_ads
+    description: "Model for TikTok Ads"
+  - name: ads_basic_performance
+    description: "Combined Ads Performance Data"
+    columns:
+      - name: date
+        description: "Date of the data"
+      - name: add_to_cart
+        description: "Add to cart count"
+      # Add descriptions for other columns as needed
