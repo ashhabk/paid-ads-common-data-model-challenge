@@ -78,5 +78,5 @@ dbt run
 dbt test
 
 
-##Conclusion
+## Conclusion
 By following these steps, you can successfully integrate new ad platforms into the MCDM.
