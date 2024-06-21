@@ -1,68 +1,82 @@
-# Instructions for Adding Data from New Ad Platforms to MCDM
+# Instructions for Adding New Ad Platforms to MCDM
 
-## Step 1: Add Source Data
-1. Upload the raw data file from the new ad platform to your BigQuery dataset.
-2. Create a new source table in BigQuery. For example, if the new platform is `Pinterest`, name the table as `src_ads_pinterest_all_data`.
+## Steps to Add New Data
 
-## Step 2: Update the dbt Models
-1. Create a new SQL file in the `models` folder of your dbt Cloud repository. For example, `pinterest_ads.sql`.
-2. Write a SQL query to transform the raw data into the desired format. Ensure the column names match the standard structure used in the existing models.
+1. **Add the New Data Source:**
+   - Ensure the new data source is loaded into BigQuery.
+   - Follow the naming convention: `src_ads_<platform>_all_data`.
 
-Example:
-```sql
-CREATE OR REPLACE TABLE `your_project.your_dataset.pinterest_ads` AS
-SELECT
-  date,
-  add_to_cart,
-  clicks,
-  comments,
-  (likes + shares + comments) AS engagements,  -- Modify based on available columns
-  impressions,
-  installs,
-  likes,
-  link_clicks,
-  post_click_conversions,
-  post_view_conversions,
-  posts,
-  purchase,
-  registrations,
-  revenue,
-  shares,
-  total_conversions,
-  video_views,
-  ad_id,
-  adset_id,
-  campaign_id,
-  channel,
-  creative_id,
-  spend
-FROM `your_project.your_dataset.src_ads_pinterest_all_data`
+2. **Create a New Model File:**
+   - Add a new SQL file in the `models/example` directory.
+   - Name it `<platform>_ads.sql`.
+
+3. **Define the Transformations:**
+   - Use the following structure to define the required transformations:
+   ```sql
+   with <platform>_ads as (
+     select
+       date,
+       clicks,
+       impressions,
+       spend,
+       null as engagements,  -- Update if the platform has engagement data
+       <other necessary fields>,
+       '<platform>' as channel
+     from {{ source('src_ads', 'src_ads_<platform>_all_data') }}
+   )
+
+   select * from <platform>_ads
+4. **Update the schema.yml File:**
+
+	Add tests for the new data model.
+version: 2
+
+models:
+  - name: <platform>_ads
+    description: "Data model for <platform> ads"
+    columns:
+      - name: date
+        tests:
+          - not_null
+      - name: clicks
+        tests:
+          - not_null
+      - name: impressions
+        tests:
+          - not_null
+      - name: spend
+        tests:
+          - not_null
+      - name: channel
+        tests:
+          - not_null
+
+**5. Run dbt Commands:**
+
+Execute dbt seed to seed the data.
+Execute dbt run to build the models.
+Execute dbt test to ensure the models are working correctly.
 
 
-### Step 2: Commit and Push Changes
+Example
+To add a new ad platform "example_ads", follow the steps:
 
-1. **Add the new Markdown file to your repository**.
-2. **Commit and push all changes** to the repository.
+Load Data:
 
-### Step 3: Fill out the Submission Form
+Ensure the src_ads_example_all_data table is available in BigQuery.
+Create Model:
 
-1. **Open the submission form**: [Submission Form](https://form.typeform.com/to/IP3EsX0N)
-2. **Provide the required information**:
-   - A link to your dbt Cloud repository that contains the completed MCDM for the `ads_basic_performance` report.
-   - A link to the recreated dashboard.
-   - Ensure the instructions for adding data from new ad platforms are included in your repository.
+Create example_ads.sql in the models/example directory with the necessary SQL transformations.
+Update Schema:
 
-### Step 4: Join the Telegram Group (Optional)
+Add schema tests for the new model.
 
-1. **Join the Telegram group** for any questions: [Telegram: @kobzevvv](https://t.me/kobzevvv)
+Run Commands: (in dbt Cloud)
 
-### Step 5: Verify and Submit
+dbt seed
+dbt run
+dbt test
 
-1. **Double-check** all the provided links and information.
-2. **Submit** the form.
 
-### Example Links
-- **dbt Cloud Repository**: `https://uq359.us1.dbt.com/dashboard/70403103933196/projects/70403103938248/`
-- **Looker Dashboard**: `https://lookerstudio.google.com/reporting/b2284ca7-c9cd-4adc-9f83-c3058e19ca86`
-
-Good luck with your submission! If you have any questions, feel free to reach out via the provided Telegram link.
+##Conclusion
+By following these steps, you can successfully integrate new ad platforms into the MCDM.
