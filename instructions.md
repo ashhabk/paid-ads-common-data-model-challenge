@@ -30,7 +30,7 @@
 
 	Add tests for the new data model.
 version: 2
-
+```bash
 models:
   - name: <platform>_ads
     description: "Data model for <platform> ads"
