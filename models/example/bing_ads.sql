@@ -1,29 +1,30 @@
 with bing as (
-    select
-        date,
-        null as add_to_cart,
-        clicks,
-        null as comments,
-        null as engagements,
-        impressions,
-        null as installs,
-        null as likes,
-        null as link_clicks,
-        null as post_click_conversions,
-        null as post_view_conversions,
-        null as posts,
-        null as purchase,
-        null as registrations,
-        null as revenue,
-        null as shares,
-        spend,
-        null as total_conversions,
-        null as video_views,
+    SELECT
         ad_id,
-        null as adset_id,
+        NULL AS add_to_cart,
+        adset_id,
         campaign_id,
         channel,
-        null as creative_id
+        clicks,
+        NULL AS comments,
+        conv AS conversions,
+        date,
+        imps AS impressions,
+        NULL AS installs,
+        NULL AS likes,
+        NULL AS link_clicks,
+        NULL AS post_click_conversions,
+        NULL AS post_view_conversions,
+        NULL AS posts,
+        NULL AS purchase,
+        NULL AS registrations,
+        NULL AS engagements,  -- Assuming clicks as engagements for Bing
+        revenue,
+        NULL AS shares,
+        spend,
+        conv AS total_conversions,
+        NULL AS video_views,
+        NULL AS creative_id
     from {{ ref('src_ads_bing_all_data') }}
 )
 select * from bing
